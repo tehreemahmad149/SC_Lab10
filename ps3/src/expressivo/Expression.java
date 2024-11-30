@@ -2,22 +2,23 @@
  * Redistribution of original or derived work requires permission of course staff.
  */
 package expressivo;
-
-/**
- * An immutable data type representing a polynomial expression of:
- *   + and *
- *   nonnegative integers and floating-point numbers
- *   variables (case-sensitive nonempty strings of letters)
- * 
- * <p>PS3 instructions: this is a required ADT interface.
- * You MUST NOT change its name or package or the names or type signatures of existing methods.
- * You may, however, add additional methods, or strengthen the specs of existing methods.
- * Declare concrete variants of Expression in their own Java source files.
- */
-public interface Expression {
+public interface Expression {//separate java files created for different types of expressions(Number, Variable, Sum, Product, PEMDAS(all possible combinations))
     
-    // Datatype definition
-    //   TODO
+	/**
+	 * An immutable data type representing a polynomial expression of:
+	 *   + and *
+	 *   nonnegative integers and floating-point numbers
+	 *   variables (case-sensitive nonempty strings of letters)
+	 * 
+	 * Expression is an Abstract Syntax Tree (AST) that can represent:
+	 * - A literal number (e.g., 3.5)
+	 * - A variable (e.g., x)
+	 * - An addition of two expressions (e.g., x + y)
+	 * - A multiplication of two expressions (e.g., x * y)
+	 * 
+	 * This interface specifies the operations supported by all variants.
+	 */ 
+	
     
     /**
      * Parse an expression.
