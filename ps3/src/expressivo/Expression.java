@@ -3,7 +3,7 @@
  */
 package expressivo;
 public interface Expression {//separate java files created for different types of expressions(Number, Variable, Sum, Product, PEMDAS(all possible combinations))
-    
+	
 	/**
 	 * An immutable data type representing a polynomial expression of:
 	 *   + and *
@@ -26,9 +26,12 @@ public interface Expression {//separate java files created for different types o
      * @return expression AST for the input
      * @throws IllegalArgumentException if the expression is invalid
      */
+    
     public static Expression parse(String input) {
-        throw new RuntimeException("unimplemented");
+    	throw new UnsupportedOperationException("This method is not implemented yet.");
     }
+ 
+
     
     /**
      * @return a parsable representation of this expression, such that
@@ -52,6 +55,13 @@ public interface Expression {//separate java files created for different types o
      */
     @Override
     public int hashCode();
+    
+   
+    public Expression differentiate(String variable);
+
+
+    public double evaluate(Environment env);
+
     
     // TODO more instance methods
     

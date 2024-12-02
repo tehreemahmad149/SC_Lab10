@@ -31,8 +31,10 @@ import Configuration;
  */
 root : sum EOF;
 sum : primitive ('+' primitive)*;
-primitive : NUMBER | '(' sum ')';
 NUMBER : [0-9]+;
+product : primitive ('*' primitive)*;
+primitive : NUMBER | VARIABLE | '(' sum ')';
+VARIABLE : [A-Za-z]+;
 
 /* Tell Antlr to ignore spaces around tokens. */
 SPACES : [ ]+ -> skip;

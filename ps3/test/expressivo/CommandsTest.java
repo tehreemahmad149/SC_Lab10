@@ -3,24 +3,96 @@
  */
 package expressivo;
 
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/**
- * Tests for the static methods of Commands.
- */
-public class CommandsTest {
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-    // Testing strategy
-    //   TODO
-    
-    @Test(expected=AssertionError.class)
-    public void testAssertionsEnabled() {
-        assert false; // make sure assertions are enabled with VM argument: -ea
+public class CommandsTest {
+	@Test
+    public void testDifferentiateSimple() {
+        Expression expr = Parser.parse("x");
+      //Differentiation with respect to x but hard-coded for ease
+        Expression derivative = expr.differentiate("x");
+        assertEquals(new Number(1), derivative);
     }
+	
+
+    @Test
+    public void testDifferentiateAddition() {
+        Expression expr = Parser.parse("x + y");
+        Expression derivative = expr.differentiate("x");
+        assertEquals(new Sum(new Number(1), new Number(0)), derivative);
+    }
+
+    @Test
+    public void testDifferentiateMultiplication() {
+        Expression expr = Parser.parse("x * y");
+        Expression derivative = expr.differentiate("x");
+        assertEquals(
+            new Sum(
+                new Product(new Number(1), new Variable("y")),
+                new Product(new Variable("x"), new Number(0))
+            ),
+            derivative
+        );
+    }
+
+
+
+
+    @Test
+    public void testSimplifyComplexExpression() {
+        // Set up the environment
+        Environment env = new Environment();
+        env.setVariable("x", 2.0);  // Set values for variables (if needed)
+        env.setVariable("y", 3.0);
+
+        // Parse the expression
+        Expression expr = Parser.parse("x * (0 + y)");
+
+        // Evaluate the expression using the environment
+        double result = expr.evaluate(env);
+        System.out.println("testSimplifyComplexExpression "+result);
+
+        // Check if the simplified result is as expected
+        assertEquals("Simplifying a complex expression failed", 6.0, result, 0.0001);
+    }
+
     
-    
-    // TODO tests for Commands.differentiate() and Commands.simplify()
+    @Test
+    public void testevaluateVariable() {
+        Environment env = new Environment();
+        env.setVariable("x", 5.0);
+        Expression expr = new Variable("x");
+        double result = expr.evaluate(env);
+        System.out.println("testevaluateVariable "+result);
+        assertEquals("Evaluating a variable failed", 5.0, result, 0.0001);
+    }
+
+    @Test
+    public void testevaluateAddition() {
+        Environment env = new Environment();
+        env.setVariable("x", 3.0);
+        env.setVariable("y", 4.0);
+        Expression expr = new Sum(new Variable("x"), new Variable("y"));
+        double result = expr.evaluate(env);
+        System.out.println("testevaluateAddition "+result);
+        assertEquals("Evaluating addition failed", 7.0, result, 0.0001);
+    }
+
+    @Test
+    public void testevaluateMultiplication() {
+        Environment env = new Environment();
+        env.setVariable("x", 2.0);
+        env.setVariable("y", 3.0);
+        Expression expr = new Product(new Variable("x"), new Variable("y"));
+        double result = expr.evaluate(env);
+        System.out.println("testevaluateMultiplication "+result);
+        assertEquals("Evaluating multiplication failed", 6.0, result, 0.0001);
+    }
+
+
     
 }

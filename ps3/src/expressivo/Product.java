@@ -40,6 +40,19 @@ public class Product implements Expression {
         Product other = (Product) obj;
         return this.left.equals(other.left) && this.right.equals(other.right);
     }
+    
+    @Override
+    public Expression differentiate(String variable) {
+        return new Sum(
+            new Product(left.differentiate(variable), right),
+            new Product(left, right.differentiate(variable))
+        );
+    }
+
+    @Override
+    public double evaluate(Environment env) {
+        return left.evaluate(env) * right.evaluate(env);
+    }
 
     @Override
     public int hashCode() { //generate hash code using prime numbers

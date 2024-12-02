@@ -38,6 +38,16 @@ public class Number implements Expression {
         checkRep();
         return Double.compare(this.value, other.value) == 0;
     }
+    
+    @Override
+    public Expression differentiate(String variable) {
+        return new Number(0);
+    }
+
+    @Override
+    public double evaluate(Environment env) {
+        return value;
+    }
 
     @Override
     public int hashCode() {//using prime number to generate hash v

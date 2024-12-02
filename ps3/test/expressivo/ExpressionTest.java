@@ -112,6 +112,34 @@ public class ExpressionTest {
     }
     
     
+
+    @Test
+    public void testParseSimple() {
+        Expression expr = Parser.parse("3");
+        assertEquals(new Number(3), expr);
+    }
+
+    @Test
+    public void testParseVariable() {
+        Expression expr = Parser.parse("x");
+        assertEquals(new Variable("x"), expr);
+    }
+
+    @Test
+    public void testParseAddition() {
+        Expression expr = Parser.parse("x + 2");//make a sum object
+        assertEquals(new Sum(new Variable("x"), new Number(2)), expr);
+    }
+
+    @Test
+    public void testParseComplex() {//make multiple objects
+        Expression expr = Parser.parse("x * (y + 2)");
+        assertEquals(
+            new Product(new Variable("x"), new Sum(new Variable("y"), new Number(2))),
+            expr
+        );
+    }
+    
     
     
 

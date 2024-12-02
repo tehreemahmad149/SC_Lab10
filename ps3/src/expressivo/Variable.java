@@ -23,7 +23,17 @@ public class Variable implements Expression {
     public String toString() {
         return this.name;
     }
-
+    @Override
+    public double evaluate(Environment env) {
+        if (!env.containsVariable(name)) {
+            throw new IllegalArgumentException("Variable " + name + " is not defined.");
+        }
+        return env.getValue(name);
+    }
+    @Override
+    public Expression differentiate(String variable) {
+        return name.equals(variable) ? new Number(1) : new Number(0);
+    }
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Variable)) return false;

@@ -36,6 +36,16 @@ public class Sum implements Expression {
         return (this.left.equals(other.left) && this.right.equals(other.right)) || 
                (this.left.equals(other.right) && this.right.equals(other.left)); // Check commutativity
     }
+    
+    @Override
+    public Expression differentiate(String variable) {
+        return new Sum(left.differentiate(variable), right.differentiate(variable));
+    }
+
+    @Override
+    public double evaluate(Environment env) {
+        return left.evaluate(env) + right.evaluate(env);
+    }
 
     @Override
     public int hashCode() { //generate hash code using prime numbers
